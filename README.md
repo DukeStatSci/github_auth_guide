@@ -36,7 +36,7 @@ generated and the resulting public key will be printed,
 ```
 
 You will then be prompted to enter this public key to GitHub, via the
-provided link, you can also select Yes here to have the function open a
+provided link. You can also select Yes here to have the function open a
 browser window directly to this page.
 
 ``` r
