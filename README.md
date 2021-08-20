@@ -2,7 +2,7 @@
 # Guide for configuring GitHub authentication
 
 This is meant to be a brief guide for setting up GitHub authentication
-via ssh - this configuration will be done in R but once setup the ssh
+via ssh - this configuration will be done in R but, once setup, the ssh
 keys will be available for any other tools using git (e.g. Jupyter) on
 the same system.
 
