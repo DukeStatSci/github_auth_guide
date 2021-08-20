@@ -53,3 +53,61 @@ If you are not logged into GitHub the website will ask you to do so,
 once logged in you should see the following form:
 
 <img src="figures/github_ssh.png" width="100%" />
+
+You should enter a meaningful name for the key and then copy and paste
+the entire public key
+
+<img src="figures/github_ssh2.png" width="100%" />
+
+Once finished, you can click the green Add SSH key button. This key
+should now show in the list of GitHub SSH keys on
+<https://github.com/settings/keys>.
+
+You can now test that the SSH authentication is working by attempting to
+clone a private repository (make sure to select the SSH url and not
+HTTPS).
+
+## Frequently Asked Questions
+
+1.  *What happens if I already have an SSH key?* - Nothing bad, the
+    `creditials` package will recognize this and just print the existing
+    public SSH key. If you want to get rid of the existing key you will
+    need to delete the `id_rsa` and `id_rsa.pub` files from the `.ssh`
+    directory in your home directory.
+
+2.  *How do I protect my private key?* - The private key of your key
+    pair is saved as a file in a folder called `.ssh` in your home
+    directory, having access to the file is equivalent to having your
+    password (at least as far as git interactions are concerned). By
+    default, permissions should be set such that only your user account
+    should be able to access that file. If you would like additional
+    security you can encrypt this key using a passphrase (i.e. password)
+    via `credentials::ssh_update_passphrase()` which will then be
+    required each time the key pair is used (e.g. pushing, pulling,
+    etc.).
+
+3.  *I get an error about an unprotected private key file when trying to
+    use git* - If you are seeing an error message that looks like the
+    following:
+
+<!-- end list -->
+
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    Permissions 0644 for '/home/guest/.ssh/id_rsa' are too open.
+    It is required that your private key files are NOT accessible by others.
+    This private key will be ignored.
+    Load key "/home/guest/.ssh/id_rsa": bad permissions
+    git@github.com: Permission denied (publickey).
+    fatal: Could not read from remote repository.
+    
+    Please make sure you have the correct access rights
+    and the repository exists.
+
+this is likely due to your system having a slightly outdated version of
+the `credentials` package which had a bug where the wrong permissions
+were applied to the key pair files. You can either fix the permissions
+to remove read access to anyone but yourself or update `credentials`,
+delete the existing keys, and start the process over. See Google for
+documentation on how to change permissions on your specific OS.
