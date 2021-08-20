@@ -2,7 +2,7 @@
 # Guide for configuring GitHub authentication
 
 This is meant to be a brief guide for setting up GitHub authentication
-via ssh - this configuration will be done in R but, once setup, the ssh
+via ssh - this configuration will be done in R but once setup the ssh
 keys will be available for any other tools using git (e.g. Jupyter) on
 the same system.
 
@@ -36,7 +36,7 @@ generated and the resulting public key will be printed,
 ```
 
 You will then be prompted to enter this public key to GitHub, via the
-provided link. You can also select Yes here to have the function open a
+provided link, you can also select Yes here to have the function open a
 browser window directly to this page.
 
 ``` r
@@ -67,17 +67,19 @@ You can now test that the SSH authentication is working by attempting to
 clone a private repository (make sure to select the SSH url and not
 HTTPS).
 
+<img src="figures/github_ssh3.png" width="100%" />
+
 ## Frequently Asked Questions
 
 1.  **What happens if I already have an SSH key?**
-    
+
     Nothing bad, the `creditials` package will recognize this and just
     print the existing public SSH key. If you want to get rid of the
     existing key you will need to delete the `id_rsa` and `id_rsa.pub`
     files from the `.ssh` directory in your home directory.
 
 2.  **How do I protect my private key?**
-    
+
     The private key of your key pair is saved as a file in a folder
     called `.ssh` in your home directory, having access to the file is
     equivalent to having your password (at least as far as git
@@ -90,9 +92,9 @@ HTTPS).
 
 3.  **I get an error about an unprotected private key file when trying
     to use git**
-    
+
     If you are seeing an error message that looks like the following:
-    
+
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -102,10 +104,10 @@ HTTPS).
         Load key "/home/guest/.ssh/id_rsa": bad permissions
         git@github.com: Permission denied (publickey).
         fatal: Could not read from remote repository.
-        
+
         Please make sure you have the correct access rights
         and the repository exists.
-    
+
     this is likely due to your system having a slightly outdated version
     of the `credentials` package which had a bug where the wrong
     permissions were applied to the key pair files. You can either fix
@@ -116,7 +118,7 @@ HTTPS).
 
 4.  **I set this up for my container and now it won’t work on stat
     server (or some other computer)**
-    
+
     This process, much like git configuration, must be done on each
     machine you intend to use, or at least each file system. Generally
     the recommendation is to create a new key pair for each machine you

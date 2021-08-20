@@ -66,6 +66,10 @@ Once finished, you can click the green Add SSH key button. This key should now s
 
 You can now test that the SSH authentication is working by attempting to clone a private repository (make sure to select the SSH url and not HTTPS).
 
+```{r echo=FALSE, out.width="100%"}
+knitr::include_graphics("figures/github_ssh3.png")
+```
+
 
 ## Frequently Asked Questions
 
