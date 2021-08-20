@@ -69,45 +69,57 @@ HTTPS).
 
 ## Frequently Asked Questions
 
-1.  *What happens if I already have an SSH key?* - Nothing bad, the
-    `creditials` package will recognize this and just print the existing
-    public SSH key. If you want to get rid of the existing key you will
-    need to delete the `id_rsa` and `id_rsa.pub` files from the `.ssh`
-    directory in your home directory.
-
-2.  *How do I protect my private key?* - The private key of your key
-    pair is saved as a file in a folder called `.ssh` in your home
-    directory, having access to the file is equivalent to having your
-    password (at least as far as git interactions are concerned). By
-    default, permissions should be set such that only your user account
-    should be able to access that file. If you would like additional
-    security you can encrypt this key using a passphrase (i.e. password)
-    via `credentials::ssh_update_passphrase()` which will then be
-    required each time the key pair is used (e.g. pushing, pulling,
-    etc.).
-
-3.  *I get an error about an unprotected private key file when trying to
-    use git* - If you are seeing an error message that looks like the
-    following:
-
-<!-- end list -->
-
-    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
-    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-    Permissions 0644 for '/home/guest/.ssh/id_rsa' are too open.
-    It is required that your private key files are NOT accessible by others.
-    This private key will be ignored.
-    Load key "/home/guest/.ssh/id_rsa": bad permissions
-    git@github.com: Permission denied (publickey).
-    fatal: Could not read from remote repository.
+1.  **What happens if I already have an SSH key?**
     
-    Please make sure you have the correct access rights
-    and the repository exists.
+    Nothing bad, the `creditials` package will recognize this and just
+    print the existing public SSH key. If you want to get rid of the
+    existing key you will need to delete the `id_rsa` and `id_rsa.pub`
+    files from the `.ssh` directory in your home directory.
 
-this is likely due to your system having a slightly outdated version of
-the `credentials` package which had a bug where the wrong permissions
-were applied to the key pair files. You can either fix the permissions
-to remove read access to anyone but yourself or update `credentials`,
-delete the existing keys, and start the process over. See Google for
-documentation on how to change permissions on your specific OS.
+2.  **How do I protect my private key?**
+    
+    The private key of your key pair is saved as a file in a folder
+    called `.ssh` in your home directory, having access to the file is
+    equivalent to having your password (at least as far as git
+    interactions are concerned). By default, permissions should be set
+    such that only your user account should be able to access that file.
+    If you would like additional security you can encrypt this key using
+    a passphrase (i.e. password) via
+    `credentials::ssh_update_passphrase()` which will then be required
+    each time the key pair is used (e.g. pushing, pulling, etc.).
+
+3.  **I get an error about an unprotected private key file when trying
+    to use git**
+    
+    If you are seeing an error message that looks like the following:
+    
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        Permissions 0644 for '/home/guest/.ssh/id_rsa' are too open.
+        It is required that your private key files are NOT accessible by others.
+        This private key will be ignored.
+        Load key "/home/guest/.ssh/id_rsa": bad permissions
+        git@github.com: Permission denied (publickey).
+        fatal: Could not read from remote repository.
+        
+        Please make sure you have the correct access rights
+        and the repository exists.
+    
+    this is likely due to your system having a slightly outdated version
+    of the `credentials` package which had a bug where the wrong
+    permissions were applied to the key pair files. You can either fix
+    the permissions to remove read access to anyone but yourself or
+    update `credentials`, delete the existing keys, and start the
+    process over. See Google for documentation on how to change
+    permissions on your specific OS.
+
+4.  **I set this up for my container and now it won’t work on stat
+    server (or some other computer)**
+    
+    This process, much like git configuration, must be done on each
+    machine you intend to use, or at least each file system. Generally
+    the recommendation is to create a new key pair for each machine you
+    will be using, e.g. OIT container, stat server, your laptop, etc.
+    The process is quick and GitHub supports the addition of multiple
+    public keys.
