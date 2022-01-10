@@ -2,7 +2,7 @@
 # Guide for configuring GitHub authentication
 
 This is meant to be a brief guide for setting up GitHub authentication
-via ssh - this is now the easiest approach to authentication as GitHub
+via `ssh` - this is now the easiest approach to authentication as GitHub
 no longer supports the use of [account
 passwords](https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/).
 
@@ -10,7 +10,7 @@ passwords](https://github.blog/2020-12-15-token-authentication-requirements-for-
 
 If R and or RStudio is available on the environment you are using then
 the following is the recommended configuration using R. Note that while
-this is done in R, the ssh key configuration will be available for any
+this is done in R, the SSH key configuration will be available for any
 other tools using git (e.g. Jupyter) on the same system.
 
 We will begin by creating a public private key pair using the
@@ -85,7 +85,7 @@ started select the `Terminal` option from the `Other` row.
 <img src="figures/github_jupyter1.png" width="100%" />
 
 This will launch a shell on the remote machine which will let you run
-the necessary commands to create your ssh keys. In this prompt run the
+the necessary commands to create your SSH keys. In this prompt run the
 following command:
 
 ``` shell
@@ -97,11 +97,11 @@ hit enter / return to use the provided default. You will also be asked
 to select a passphrase (a password for your private key), you are
 welcome to set this or not (just hit enter / return again). If a
 passphrase is set, you will be prompted to enter it every time git /
-Jupyter Lab / RStudio needs access to the ssh key. Overall your session
+Jupyter Lab / RStudio needs access to the SSH key. Overall your session
 should resemble somethiing like the following:
 
 ``` shell
-jovyan@fa45fed244b1:~/work$ ssh-keygen
+$ ssh-keygen
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/jovyan/.ssh/id_rsa): 
 Created directory '/home/jovyan/.ssh'.
@@ -125,6 +125,54 @@ The key's randomart image is:
 +----[SHA256]-----+
 ```
 
+In order to obtain your actual public SSH key you should enter the
+command:
+
+``` shell
+cat ~/.ssh/id_rsa.pub
+```
+
+which should look something like the following when run in Jupyter Lab:
+
+``` shell
+$ cat ~/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/pZ2lAOvg67JQ4/LVot1Eg9YVyw6+hrAUVFuymVLqBrNI3NLipKxOM3kjzgupHG/TQGiwZ6FGifNWTH5/IoK85rFE9DU5AK8PhL3vJzagRStqf/T/724GtzrdVHtwQnW/8SIlpn//XGAGFzXRCDVFJppsL+5Pm1CUO/BHdDmeTQzqqx5DHsSXmDGdWgpdyWvlxwU/yOgbU4P513svWUgwQzRs4gZTLeLbc9+XqrXxpOF6XMg18k0j54xQ2qJ4aHU/Ar9vivGlqsMQ1nXbjo0CYua0GvBOtsaVSTVf5KCh0osZx5LqXXXS9fblxpLnhnYS5BTJPYoHrDDsEfYpf+f92N3EsQnKgudVGUQCIO+AgCX8YG2YR451KiV7UUJ2gW/zY+yGmc/tkhoU6OV1mIbGTSb14tTR907LNtIImkgdTcE8CxKVUx2ZCtwRgmptJ96Fi7VqoUoLRg/Sch3Z7Qls61Z14MziSzxgezfgwQVyRl4jXa+g/5QkqoTC0Adb4Ss= jovyan@fa45fed244b1
+```
+
+You should now copy to your clipboard the entire contents of this
+output, from `ssh-rsa` through `= jovyan@fa45fed244b1` however this last
+bit will likely differ slightly depend on the server being used.
+
+Once the SSH key has been copied to your clipboard you should now go to
+the GitHub SSH keys settings page (<https://github.com/settings/keys>),
+click the `New SSH Key` button and paste the key into the form.
+Providing a title to help you identify which machine this SSH key is
+associated with will be useful.
+
+In order to test that the SSH key based authentication is working you
+should run the following command:
+
+``` shell
+ssh -T git@github.com
+```
+
+Which should prompt you to add GitHub permanently to the list of known
+hosts. Type `yes` and enter to this prompt and you should see the
+following:
+
+``` shell
+$ ssh -T git@github.com
+The authenticity of host 'github.com (140.82.113.4)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+Hi rundel! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+If you get an error around a failure to authenticate then you should go
+back and check that you copied and pasted the SSH key correctly.
+
 ## Frequently Asked Questions
 
 1.  **What happens if I already have an SSH key?**
@@ -132,7 +180,9 @@ The key's randomart image is:
     Nothing bad, the `creditials` package will recognize this and just
     print the existing public SSH key. If you want to get rid of the
     existing key you will need to delete the `id_rsa` and `id_rsa.pub`
-    files from the `.ssh` directory in your home directory.
+    files from the `.ssh` directory in your home directory. If using
+    Jupyter Lab / the terminal the `ssh-keygen` command will prompt you
+    before overwriting any existing SSH keys.
 
 2.  **How do I protect my private key?**
 
@@ -172,7 +222,7 @@ The key's randomart image is:
     process over. See Google for documentation on how to change
     permissions on your specific OS.
 
-4.  **I set this up for my container and now it won’t work on stat
+4.  **I set this up for my container and now it won’t work on the stat
     server (or some other computer)**
 
     This process, much like git configuration, must be done on each
@@ -180,4 +230,4 @@ The key's randomart image is:
     the recommendation is to create a new key pair for each machine you
     will be using, e.g. OIT container, stat server, your laptop, etc.
     The process is quick and GitHub supports the addition of multiple
-    public keys.
+    public SSH keys.
