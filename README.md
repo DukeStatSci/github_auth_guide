@@ -2,9 +2,16 @@
 # Guide for configuring GitHub authentication
 
 This is meant to be a brief guide for setting up GitHub authentication
-via ssh - this configuration will be done in R but once setup the ssh
-keys will be available for any other tools using git (e.g. Jupyter) on
-the same system.
+via ssh - this is now the easiest approach to authentication as GitHub
+no longer supports the use of [account
+passwords](https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/).
+
+## Configuration using R / RStudio
+
+If R and or RStudio is available on the environment you are using then
+the following is the recommended configuration using R. Note that while
+this is done in R, the ssh key configuration will be available for any
+other tools using git (e.g. Jupyter) on the same system.
 
 We will begin by creating a public private key pair using the
 `credentials` package, run the following line in the RStudio Console:
@@ -68,6 +75,55 @@ clone a private repository (make sure to select the SSH url and not
 HTTPS).
 
 <img src="figures/github_ssh3.png" width="100%" />
+
+## Configuration using Jupyter Lab (or Shell)
+
+If the machine you are using does not have R or RStudio installed you
+can instead use the following steps. Once the Jupyter Lab session is
+started select the `Terminal` option from the `Other` row.
+
+<img src="figures/github_jupyter1.png" width="100%" />
+
+This will launch a shell on the remote machine which will let you run
+the necessary commands to create your ssh keys. In this prompt run the
+following command:
+
+``` shell
+ssh-keygen
+```
+
+When prompted to “Enter file in which to save the key” you should just
+hit enter / return to use the provided default. You will also be asked
+to select a passphrase (a password for your private key), you are
+welcome to set this or not (just hit enter / return again). If a
+passphrase is set, you will be prompted to enter it every time git /
+Jupyter Lab / RStudio needs access to the ssh key. Overall your session
+should resemble somethiing like the following:
+
+``` shell
+jovyan@fa45fed244b1:~/work$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/jovyan/.ssh/id_rsa): 
+Created directory '/home/jovyan/.ssh'.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/jovyan/.ssh/id_rsa
+Your public key has been saved in /home/jovyan/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:knCAvwhJkb+cx8W8lAunbjgzKuQJCsVuNQPCXqZywb8 jovyan@fa45fed244b1
+The key's randomart image is:
++---[RSA 3072]----+
+|.oo..            |
+|.+=o .           |
+|o+==. + .        |
+|+o+.*+ O         |
+|.=.o+=O S        |
+|o.++E+ +         |
+|*.. +            |
+|oo = o           |
+|... =            |
++----[SHA256]-----+
+```
 
 ## Frequently Asked Questions
 
