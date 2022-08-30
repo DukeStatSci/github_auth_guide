@@ -76,11 +76,11 @@ HTTPS).
 
 <img src="figures/github_ssh3.png" width="100%" />
 
-When cloning a project for the first time, you might see a prompt that 
-says the authenticity of host can't be established and asks whether you 
+When cloning a project for the first time, you might see a prompt that
+says the authenticity of host can’t be established and asks whether you
 want to continue connecting. Type yes in the box and hit OK.
 
-<img src="figures/github_ssh4.png" width="70%" />
+<img src="figures/github_ssh4.png" width="70%" style="display: block; margin: auto;" />
 
 ## Configuration using Jupyter Lab (or Shell)
 
@@ -234,6 +234,6 @@ back and check that you copied and pasted the SSH key correctly.
     This process, much like git configuration, must be done on each
     machine you intend to use, or at least each file system. Generally
     the recommendation is to create a new key pair for each machine you
-    will be using, e.g. OIT container, stat server, your laptop, etc.
+    will be using, e.g. OIT container, stat server, your laptop, etc.
     The process is quick and GitHub supports the addition of multiple
     public SSH keys.
