@@ -80,7 +80,7 @@ When cloning a project for the first time, you might see a prompt that
 says the authenticity of host can't be established and asks whether you 
 want to continue connecting. Type yes in the box and hit OK.
 
-
+<img src="figures/github_ssh4.png" width="100%" />
 
 ## Configuration using Jupyter Lab (or Shell)
 
