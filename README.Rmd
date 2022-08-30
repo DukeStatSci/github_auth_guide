@@ -74,6 +74,10 @@ You can now test that the SSH authentication is working by attempting to clone a
 knitr::include_graphics("figures/github_ssh3.png")
 ```
 
+When cloning a project for the first time, you might see a prompt that says the authenticity of host can't be established and asks whether you want to continue connecting. Type yes in the box and hit OK.
+
+<img src="figures/github_ssh4.png" width="70%" />
+
 ## Configuration using Jupyter Lab (or Shell)
 
 If the machine you are using does not have R or RStudio installed you can instead use the following steps. Once the Jupyter Lab session is started select the `Terminal` option from the `Other` row.
