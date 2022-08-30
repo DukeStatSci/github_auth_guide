@@ -76,6 +76,12 @@ HTTPS).
 
 <img src="figures/github_ssh3.png" width="100%" />
 
+When cloning a project for the first time, you might see a prompt that 
+says the authenticity of host can't be established and asks whether you 
+want to continue connecting. Type yes in the box and hit OK.
+
+
+
 ## Configuration using Jupyter Lab (or Shell)
 
 If the machine you are using does not have R or RStudio installed you
